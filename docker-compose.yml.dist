@@ -1,0 +1,69 @@
+version: '3'
+services:
+  mysql:
+    container_name: product_review_mysql
+    build:
+      context: ./docker/mysql
+    volumes:
+    - .docker_data/logs/mysql:/var/log/mysql
+    - .docker_data/mysql:/var/lib/mysql
+    networks:
+    - mainnet
+    ports:
+    - "3306:3306"
+    environment:
+    - MYSQL_ROOT_PASSWORD=11223344
+    - MYSQL_DATABASE=adventureworks
+  php:
+    container_name: product_review_php
+    build: ./docker/php
+    volumes:
+    - .:/www:cached
+    - .docker_data/logs/php:/var/log/php
+    - .docker_data/tmp:/tmp
+    expose:
+    - "9000"
+    ports:
+    - "9003:9001"
+    environment:
+      CACHE_DIR: /www/var/cache
+      LOG_DIR: /www/var/logs
+      SESSION_DIR: /www/var/sessions
+      XDEBUG_CONFIG: remote_host=172.17.0.1
+      PHP_IDE_CONFIG: "serverName=docker"
+    command: /var/local/entrypoint.sh
+    networks:
+    - mainnet
+    links:
+    - rabbitmq
+    - mysql
+  nginx:
+    container_name: product_review_nginx
+    build:
+      context: ./docker/nginx
+    ports:
+    - "80:80"
+    links:
+    - php
+    volumes:
+    - .:/www:cached
+    - .docker_data/logs/nginx:/var/log/nginx
+    networks:
+    - mainnet
+  rabbitmq:
+    container_name: product_review_rabbitmq
+    build:
+      context: ./docker/rabbitmq
+    networks:
+    - mainnet
+    ports:
+    - "15672:15672"
+    - "5672:5672"
+    labels:
+      NAME: "rabbitmq1"
+    volumes:
+    - "./docker/rabbitmq/enabled_plugins:/etc/rabbitmq/enabled_plugins"
+    environment:
+    - RABBITMQ_LOG_BASE=/var/log/rabbitmq
+networks:
+  mainnet:

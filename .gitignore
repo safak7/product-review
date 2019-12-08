@@ -1,0 +1,15 @@
+/vendor
+/.idea
+Homestead.json
+Homestead.yamldocker.dist
+.env
+/docker
+/.docker_data/
+/docker-compose.yml
+phpunit.xml
+/storage/app/*
+/storage/framework/*
+/storage/logs/*
+/config/filesystems.php
+/config/queue.php
+composer.lock
