@@ -66,6 +66,3 @@ php artisan queue:work --queue CHECK_BAD_WORDS
 php artisan queue:work --queue SEND_NOTIFICATION
 ```
 For the Service to work, queue workers must work continuously.
-  
-
-# product-review
