@@ -6,7 +6,6 @@ Homestead.yamldocker.dist
 /docker
 /.docker_data/
 /docker-compose.yml
-phpunit.xml
 /storage/app/*
 /storage/framework/*
 /storage/logs/*
