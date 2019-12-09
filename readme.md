@@ -59,13 +59,23 @@ If composer is not installed on your system, [download composer](https://getcomp
 
 ### Queue
 
-To run the workers of queue messages that will process
+To run the single worker of queue messages that will process
 The following commands should be executed by connecting to Docker Php Container.  
 ```bash
 php artisan queue:work --queue CHECK_BAD_WORDS
 
 php artisan queue:work --queue SEND_NOTIFICATION
 ```
+
+or
+
+You can run all consumers using the Supervisor. 
+To use the Supervisor, connect to Docker Php Container and
+you should run the following command.
+```bash
+supervisorctl start all
+```
+
 For the Service to work, queue workers must work continuously.
 
 ###API Request
