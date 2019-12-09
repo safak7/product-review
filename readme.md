@@ -48,21 +48,68 @@ php artisan migrate
 ```
 
 #### Composer Installation
-Docker Php Container'ı içerisinde vendor dosyalarının 
-oluşturulması için aşağıdaki komut çalıştırılmalı
-
 In Docker Php Container
 The following command must be run to create vendor files
 ```bash
 composer install
 ```
+If composer is not installed on your system, [download composer](https://getcomposer.org/download)
 
-## Queue
-To run the workers of queue messages that will process
+##USAGE
+
+### Queue
+
+To run the single worker of queue messages that will process
 The following commands should be executed by connecting to Docker Php Container.  
 ```bash
 php artisan queue:work --queue CHECK_BAD_WORDS
 
 php artisan queue:work --queue SEND_NOTIFICATION
 ```
+
+or
+
+You can run all consumers using the Supervisor. 
+To use the Supervisor, connect to Docker Php Container and
+you should run the following command.
+```bash
+supervisorctl start all
+```
+
 For the Service to work, queue workers must work continuously.
+
+###API Request
+
+The service uses Basic Auth for authentication.
+Basic Auth information in the .env file API_USERNAME and API_PASSWORD keys.
+
+To create a product review with the Basic Auth information in the .env file
+You should submit a request sample request.
+
+Sample request:
+[POST] http://product.review-local.net/api/reviews
+```bash
+'Content-Type: application/json' 
+{
+    "name": "Elvis Presley",
+    "email": "theking@elvismansion.com",
+    "productid": "1",
+    "review": "I really love the product and will recommend!"
+} 
+```
+
+##PHPUNIT
+
+Unit testleri çalıştımak için aşağıdaki komutu Docker Php Container'ına bağlanarak çalıştırılmalı.
+
+To run unit tests, you must run the following command by connecting to the Docker Php Container
+```bash
+vendor/bin/phpunit
+```
+
+##General Infos
+
+System Log files are stored in the storage/logs directory.
+
+Instead of simulating notification email sending, 
+sample mail content is written to files in storage/app directory reviewIDreview.txt

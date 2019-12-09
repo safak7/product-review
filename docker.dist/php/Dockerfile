@@ -30,6 +30,12 @@ RUN apt-get update && apt-get install -y \
 
 RUN docker-php-ext-install sockets
 
+RUN apt-get install -y nano
+RUN apt-get install -y supervisor
+ADD check_bad_words.conf /etc/supervisor/conf.d/check_bad_words.conf
+ADD send_notification.conf /etc/supervisor/conf.d/send_notification.conf
+RUN mkdir -p /var/log
+
 RUN echo "extension=mongodb.so" >> /usr/local/etc/php/conf.d/mongodb.ini
 #RUN echo "extension=yaml.so" >> /usr/local/etc/php/conf.d/yaml.ini
 
@@ -58,5 +64,7 @@ RUN mkdir -p /var/log/php
 RUN chown -R www-data: /var/log/php
 
 RUN chmod 777 -R /tmp
+
+
 
 WORKDIR /www
