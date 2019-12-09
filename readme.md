@@ -53,11 +53,12 @@ The following command must be run to create vendor files
 ```bash
 composer install
 ```
-If composer is not installed on your system, https://getcomposer.org/download/
+If composer is not installed on your system, [download composer](https://getcomposer.org/download)
 
 ##USAGE
 
 ### Queue
+
 To run the workers of queue messages that will process
 The following commands should be executed by connecting to Docker Php Container.  
 ```bash
@@ -68,6 +69,7 @@ php artisan queue:work --queue SEND_NOTIFICATION
 For the Service to work, queue workers must work continuously.
 
 ###API Request
+
 The service uses Basic Auth for authentication.
 Basic Auth information in the .env file API_USERNAME and API_PASSWORD keys.
 
@@ -96,6 +98,7 @@ vendor/bin/phpunit
 ```
 
 ##General Infos
+
 System Log files are stored in the storage/logs directory.
 
 Instead of simulating notification email sending, 
