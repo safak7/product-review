@@ -100,8 +100,6 @@ Sample request:
 
 ##PHPUNIT
 
-Unit testleri çalıştımak için aşağıdaki komutu Docker Php Container'ına bağlanarak çalıştırılmalı.
-
 To run unit tests, you must run the following command by connecting to the Docker Php Container
 ```bash
 vendor/bin/phpunit
